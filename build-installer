@@ -1,0 +1,13 @@
+#!/bin/bash
+ROOT_DIR=$(dirname "$0")
+PUBLIC_DIR="$ROOT_DIR/public"
+DMG_PATH="$ROOT_DIR/Install Pop Pixie.dmg"
+
+ls "$PUBLIC_DIR/.Pop Pixie.app" 2>0 > /dev/null || {
+  echo "Error: '$PUBLIC_DIR/.Pop Pixie.app' does not exist" >/dev/stderr
+  exit 1
+}
+
+rm "$DMG_PATH" 2>/dev/null
+
+hdiutil create -srcfolder "$ROOT_DIR/public" -volname "Install Pop Pixie" "$DMG_PATH"

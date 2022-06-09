@@ -11,7 +11,7 @@
 
 SOURCE_PATH="$(dirname "$0")/.Pop Pixie.app"
 DESTINATION_PATH="/Applications/Pop Pixie.app"
-BACKUP_DESTINATION_PATH="/$HOME/Downloads/Pop Pixie.app"
+BACKUP_DESTINATION_PATH="$HOME/Downloads/Pop Pixie.app"
 
 echo "Installing Pop Pixie to $DESTINATION_PATH"
 

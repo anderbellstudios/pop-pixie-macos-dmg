@@ -17,24 +17,24 @@ echo "Installing Pop Pixie to $DESTINATION_PATH"
 
 rm -r "$DESTINATION_PATH" 2>/dev/null
 cp -r "$SOURCE_PATH" "$DESTINATION_PATH" 2>/dev/null || {
-	echo "Failed to install to $DESTINATION_PATH"
+  echo "Failed to install to $DESTINATION_PATH"
 
-	DESTINATION_PATH="$BACKUP_DESTINATION_PATH"
-	echo "Installing Pop Pixie to $DESTINATION_PATH"
+  DESTINATION_PATH="$BACKUP_DESTINATION_PATH"
+  echo "Installing Pop Pixie to $DESTINATION_PATH"
 
-	rm -r "$DESTINATION_PATH" 2>/dev/null
-	cp -r "$SOURCE_PATH" "$DESTINATION_PATH" 2>/dev/null || {
-		echo "Failed to install to $DESTINATION_PATH"
-		echo "Could not install Pop Pixie. Please contact us at team@mousetrapped.co.uk for help."
-		read
-		exit 1
-	}
+  rm -r "$DESTINATION_PATH" 2>/dev/null
+  cp -r "$SOURCE_PATH" "$DESTINATION_PATH" 2>/dev/null || {
+    echo "Failed to install to $DESTINATION_PATH"
+    echo "Could not install Pop Pixie. Please contact us at team@mousetrapped.co.uk for help."
+    read
+    exit 1
+  }
 }
 
 xattr -d com.apple.quarantine "$DESTINATION_PATH" 2>/dev/null ||
   echo "Failed to remove quarantine flag. If you experience any difficulties installing Pop Pixie, contact us at team@mousetrapped.co.uk."
 
 open -R "$DESTINATION_PATH" &&
-	echo "Installation complete. Press return to exit."
+  echo "Installation complete. Press return to exit."
 
 read

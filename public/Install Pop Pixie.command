@@ -7,7 +7,7 @@
 #
 # If you'd like to sponsor us to get the Pop Pixie macOS binary signed, or if
 # you know of an alternative workaround, please contact us at
-# team@mousetrapped.co.uk.
+# team@anderbell.studio.
 
 SOURCE_PATH="$(dirname "$0")/.Pop Pixie.app"
 DESTINATION_PATH="/Applications/Pop Pixie.app"

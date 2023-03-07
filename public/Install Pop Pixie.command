@@ -32,7 +32,7 @@ cp -r "$SOURCE_PATH" "$DESTINATION_PATH" 2>/dev/null || {
 }
 
 xattr -d com.apple.quarantine "$DESTINATION_PATH" 2>/dev/null ||
-  echo "Failed to remove quarantine flag. If you experience any difficulties installing Pop Pixie, contact us at team@mousetrapped.co.uk."
+  echo "Failed to remove quarantine flag. If you experience any difficulties installing Pop Pixie, contact us at team@anderbell.studio."
 
 open -R "$DESTINATION_PATH" &&
   echo "Installation complete. Press return to exit."

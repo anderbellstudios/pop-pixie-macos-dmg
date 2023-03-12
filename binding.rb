@@ -1,6 +1,6 @@
 module MacOSPackager
   def self.package(build)
-    destination_dir = File.join(__dir__, 'public', '.Pop Pixie.app')
+    destination_dir = File.join(__dir__, 'tmp', 'Pop Pixie.app')
 
     FileUtils.rm_rf(destination_dir)
     FileUtils.cp_r(Dir.glob(File.join(build.dir, '*.app')).first, destination_dir)

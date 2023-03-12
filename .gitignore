@@ -1,2 +1,4 @@
 /public/*.app
 /*.dmg
+/tmp/*
+!/tmp/.keep

@@ -1,13 +1,52 @@
 #!/bin/bash
 ROOT_DIR=$(dirname "$0")
 PUBLIC_DIR="$ROOT_DIR/public"
+TMP_DIR="$ROOT_DIR/tmp"
+APP_IN_PATH="$TMP_DIR/Pop Pixie.app"
+APP_ZIP_PATH="$TMP_DIR/Pop Pixie.zip"
+APP_OUT_PATH="$PUBLIC_DIR/Pop Pixie.app"
 DMG_PATH="$ROOT_DIR/Install Pop Pixie.dmg"
 
-ls "$PUBLIC_DIR/.Pop Pixie.app" &>/dev/null || {
-  echo "Error: '$PUBLIC_DIR/.Pop Pixie.app' does not exist" >/dev/stderr
+ls "$APP_IN_PATH" &>/dev/null || {
+  echo "Error: '$APP_PATH' does not exist" >/dev/stderr
   exit 1
 }
 
 rm "$DMG_PATH" &>/dev/null
 
-hdiutil create -srcfolder "$ROOT_DIR/public" -volname "Install Pop Pixie" "$DMG_PATH"
+codesign \
+  --deep \
+  --force \
+  --verify \
+  --verbose \
+  --timestamp \
+  --options \
+  runtime \
+  --entitlements \
+  "$ROOT_DIR/pop-pixie.entitlements" \
+  --sign "Developer ID Application: Joe Anderson (Z598L5A457)" \
+  "$APP_IN_PATH" || {
+  echo "Error: Failed to sign application" >/dev/stderr
+  exit 1
+}
+
+ditto -c -k --sequesterRsrc --keepParent "$APP_IN_PATH" "$APP_ZIP_PATH" || {
+  echo "Error: Failed to zip application" >/dev/stderr
+  exit 1
+}
+
+xcrun notarytool submit \
+  "$APP_ZIP_PATH" \
+  --keychain-profile pop-pixie \
+  --wait || {
+  echo "Error: Failed to notarize application" >/dev/stderr
+  exit 1
+}
+
+rm -rf "$APP_OUT_PATH" &>/dev/null
+cp -r "$APP_IN_PATH" "$APP_OUT_PATH" || {
+  echo "Error: Failed to copy application"
+  exit 1
+}
+
+hdiutil create -srcfolder "$PUBLIC_DIR" -volname "Install Pop Pixie" "$DMG_PATH"
